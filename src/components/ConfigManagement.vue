@@ -1,7 +1,7 @@
 <template>
   <div class="config-management">
     <ConfigCreation v-if="configId === ''" v-on:create-or-edit="createOrEdit" />
-    <ConfigEdit v-else />
+    <ConfigEdit v-bind:config-data="configData" v-else  />
   </div>
 </template>
 
