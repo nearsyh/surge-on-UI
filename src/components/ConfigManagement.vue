@@ -8,7 +8,7 @@
 <script>
 import ConfigCreation from "./ConfigCreation.vue";
 import ConfigEdit from "./ConfigEdit.vue";
-import { createConfiguration } from "../lib/ConfigService";
+import { createOrGetConfiguration } from "../lib/ConfigService";
 
 export default {
   components: {
@@ -31,13 +31,8 @@ export default {
   },
   methods: {
     createOrEdit: async function(id) {
-      // try {
-      console.log("Create " + id);
-      this.configData = await createConfiguration(id);
-      // } catch (e) {
-      //   console.log(e);
-      //   this.configData = await getConfiguration(id);
-      // }
+      this.configData = await createOrGetConfiguration(id);
+      this.configId = id;
     }
   }
 };

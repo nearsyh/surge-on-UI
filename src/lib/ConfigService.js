@@ -5,38 +5,40 @@ export async function getConfiguration(id) {
   return response.data;
 }
 
-export async function createConfiguration(id) {
-  let response = await axios.put(`/api/v1/configurations/${id}`, {});
-  return response.data;
+export async function createOrGetConfiguration(id) {
+  let response = await axios
+    .put(`/api/v1/configurations/${id}`, {})
+    .then((res) => res.data, async () => await getConfiguration(id));
+  return response;
 }
 
 export async function upsertAirportConfiguration(id, airport) {
   let response = await axios.post(`/api/v1/configurations/${id}/airports`, airport);
-  return response.data; 
+  return response.data;
 }
 
 export async function upsertGroupConfiguration(id, group) {
   let response = await axios.post(`/api/v1/configurations/${id}/groups`, group);
-  return response.data; 
+  return response.data;
 }
 
 export async function upsertGenerals(id, generals) {
   let response = await axios.post(`/api/v1/configurations/${id}/generals`, {
     text: generals
   });
-  return response.data; 
+  return response.data;
 }
 
 export async function upsertRules(id, rules) {
   let response = await axios.post(`/api/v1/configurations/${id}/rules`, {
     text: rules
   });
-  return response.data; 
+  return response.data;
 }
 
 export async function upsertUrlRewrites(id, urlRewrites) {
   let response = await axios.post(`/api/v1/configurations/${id}/url_rewrites`, {
     text: urlRewrites
   });
-  return response.data; 
+  return response.data;
 }
