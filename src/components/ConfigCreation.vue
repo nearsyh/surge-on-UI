@@ -1,9 +1,18 @@
 <template>
-  <div class="config-creation"></div>
+  <div class="config-creation">
+    <input v-model="id" />
+    <button v-on:click="$emit('create-or-edit', id)">Create</button>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data: function() {
+    return {
+      id: ''
+    };
+  }
+};
 </script>
 
 <style scoped>

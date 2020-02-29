@@ -1,18 +1,19 @@
 <template>
   <div class="config-management">
-    <ConfigCreation v-if="configId === ''" v-on:create="onCreate" />
+    <ConfigCreation v-if="configId === ''" v-on:create-or-edit="createOrEdit" />
     <ConfigEdit v-else />
   </div>
 </template>
 
 <script>
-import ConfigCreation from './ConfigCreation.vue';
-import ConfigEdit from './ConfigEdit.vue';
+import ConfigCreation from "./ConfigCreation.vue";
+import ConfigEdit from "./ConfigEdit.vue";
+import { createConfiguration } from "../lib/ConfigService";
 
 export default {
   components: {
     ConfigCreation,
-    ConfigEdit,
+    ConfigEdit
   },
   data: function() {
     return {
@@ -28,8 +29,16 @@ export default {
       }
     };
   },
-  onCreate: function(name) {
-    
+  methods: {
+    createOrEdit: async function(id) {
+      // try {
+      console.log("Create " + id);
+      this.configData = await createConfiguration(id);
+      // } catch (e) {
+      //   console.log(e);
+      //   this.configData = await getConfiguration(id);
+      // }
+    }
   }
 };
 </script>

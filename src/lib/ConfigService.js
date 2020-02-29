@@ -1,43 +1,41 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.SERVER_HOST || 'localhost:8080';
-
-async function getConfiguration(id) {
+export async function getConfiguration(id) {
   let response = await axios.get(`/api/v1/configurations/${id}`);
   return response.data;
 }
 
-async function createConfiguration(id) {
-  let response = await axios.put(`/api/v1/configurations/${id}`, data={});
+export async function createConfiguration(id) {
+  let response = await axios.put(`/api/v1/configurations/${id}`, {});
   return response.data;
 }
 
-async function upsertAirportConfiguration(id, airport) {
-  let response = await axios.post(`/api/v1/configurations/${id}/airports`, data=airport);
+export async function upsertAirportConfiguration(id, airport) {
+  let response = await axios.post(`/api/v1/configurations/${id}/airports`, airport);
   return response.data; 
 }
 
-async function upsertGroupConfiguration(id, group) {
-  let response = await axios.post(`/api/v1/configurations/${id}/groups`, data=airport);
+export async function upsertGroupConfiguration(id, group) {
+  let response = await axios.post(`/api/v1/configurations/${id}/groups`, group);
   return response.data; 
 }
 
-async function upsertGenerals(id, generals) {
-  let response = await axios.post(`/api/v1/configurations/${id}/generals`, data={
+export async function upsertGenerals(id, generals) {
+  let response = await axios.post(`/api/v1/configurations/${id}/generals`, {
     text: generals
   });
   return response.data; 
 }
 
-async function upsertRules(id, rules) {
-  let response = await axios.post(`/api/v1/configurations/${id}/rules`, data={
+export async function upsertRules(id, rules) {
+  let response = await axios.post(`/api/v1/configurations/${id}/rules`, {
     text: rules
   });
   return response.data; 
 }
 
-async function upsertUrlRewrites(id, urlRewrites) {
-  let response = await axios.post(`/api/v1/configurations/${id}/url_rewrites`, data={
+export async function upsertUrlRewrites(id, urlRewrites) {
+  let response = await axios.post(`/api/v1/configurations/${id}/url_rewrites`, {
     text: urlRewrites
   });
   return response.data; 

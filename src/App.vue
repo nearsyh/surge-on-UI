@@ -5,14 +5,19 @@
 </template>
 
 <script>
-import ConfigManagement from './components/ConfigManagement.vue'
+import ConfigManagement from "./components/ConfigManagement.vue";
+import axios from "axios";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     ConfigManagement
+  },
+  mounted: function() {
+    axios.defaults.baseURL = "http://" + process.env.VUE_APP_SERVER_HOST;
+    console.log(axios.defaults.baseURL);
   }
-}
+};
 </script>
 
 <style>
