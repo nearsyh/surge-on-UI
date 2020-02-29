@@ -1,6 +1,6 @@
 <template>
   <div class="config-management">
-    <ConfigCreation v-if="configId === ''" />
+    <ConfigCreation v-if="configId === ''" v-on:create="onCreate" />
     <ConfigEdit v-else />
   </div>
 </template>
@@ -27,6 +27,9 @@ export default {
         groups: []
       }
     };
+  },
+  onCreate: function(name) {
+    
   }
 };
 </script>
