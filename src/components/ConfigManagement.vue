@@ -37,7 +37,7 @@ export default {
     createOrEdit: async function(id) {
       this.configData = await createOrGetConfiguration(id);
       this.$router.push({
-        path: `/configs/${id}`
+        path: `/config/${id}`
       });
     }
   }

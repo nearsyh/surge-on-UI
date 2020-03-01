@@ -11,6 +11,11 @@ const router = new VueRouter({
       redirect: "/config",
     },
     {
+      path: "/config",
+      component: App,
+      props: true,
+    },
+    {
       path: "/config/:id",
       component: App,
       props: true,
@@ -21,6 +26,5 @@ const router = new VueRouter({
 Vue.use(VueRouter)
 
 new Vue({
-  render: h => h(App),
-  router
+  router,
 }).$mount('#app')
