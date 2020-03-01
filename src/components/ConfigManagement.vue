@@ -1,7 +1,7 @@
 <template>
   <div class="config-management">
     <ConfigCreation v-if="!configId" v-on:create-or-edit="createOrEdit" />
-    <ConfigEdit v-bind:config-data="configData" v-else />
+    <ConfigEdit v-bind:config-data="configData" :on-save="onSave" v-else />
   </div>
 </template>
 
@@ -11,7 +11,8 @@ import ConfigEdit from "./ConfigEdit.vue";
 import axios from 'axios';
 import {
   createOrGetConfiguration,
-  getConfiguration
+  getConfiguration,
+  updateConfiguration
 } from "../lib/ConfigService";
 
 export default {
@@ -45,6 +46,9 @@ export default {
       this.$router.push({
         path: `/config/${id}`
       });
+    },
+    onSave: async function() {
+      this.configData = await updateConfiguration(this.configId, this.configData);
     },
     async refresh(id) {
       await getConfiguration(id).then(

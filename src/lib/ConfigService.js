@@ -12,6 +12,11 @@ export async function createOrGetConfiguration(id) {
   return response;
 }
 
+export async function updateConfiguration(id, config) {
+  let response = await axios.post(`/api/v1/configurations/${id}`, config);
+  return response.data;
+}
+
 export async function upsertAirportConfiguration(id, airport) {
   let response = await axios.post(`/api/v1/configurations/${id}/airports`, airport);
   return response.data;
