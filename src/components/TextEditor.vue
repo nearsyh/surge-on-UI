@@ -28,6 +28,11 @@ export default {
   padding: 6px !important;
 }
 .prism-editor-wrapper pre code {
+  margin: 0;
   font-size: 12px !important;
+}
+
+.prism-editor__code {
+  margin: 0px !important;
 }
 </style>

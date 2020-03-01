@@ -1,55 +1,59 @@
 <template>
   <div class="config-edit">
-    <div class="airports config-group">
-      <h2>Airport Configuration</h2>
-      <div class="airport" v-for="(airport, id) in configData.airports" :key="id">
-        <b-input-group :prepend="airport.airport_name" class="mt-3">
-          <b-form-input v-model="airport.url"></b-form-input>
-          <b-input-group-append>
-            <b-button variant="outline-success" v-on:click="deleteAirport(id)">Delete</b-button>
-          </b-input-group-append>
-        </b-input-group>
+    <b-card no-body>
+      <div class="head">
+        <div class="title">{{ `Config: ${configData.name}` }}</div>
+        <button v-on:click="onSave">Save</button>
       </div>
-      <input v-model="newAirport" />
-      <button v-on:click="addNewAirport">Add New Airport</button>
-    </div>
+      <b-tabs pills card vertical>
+        <b-tab title="Airports">
+          <div class="airport" v-for="(airport, id) in configData.airports" :key="id">
+            <b-input-group :prepend="airport.airport_name" class="mt-3">
+              <b-form-input v-model="airport.url"></b-form-input>
+              <b-input-group-append>
+                <b-button variant="outline-success" v-on:click="deleteAirport(id)">Delete</b-button>
+              </b-input-group-append>
+            </b-input-group>
+          </div>
+          <input v-model="newAirport" />
+          <button v-on:click="addNewAirport">Add New Airport</button>
+        </b-tab>
 
-    <div class="groups config-group">
-      <h2>Proxy Group Configuration</h2>
-      <div class="group" v-for="(group, id) in configData.group_configurations" :key="id">
-        <input class="name" v-model="group.group_name" />
-        <input class="name" v-model="group.pattern" />
-        <button v-on:click="deleteGroup(id)">Delete</button>
-      </div>
-      <input v-model="newGroup" />
-      <button v-on:click="addNewGroup">Add New Group</button>
-    </div>
+        <b-tab title="Proxy Groups">
+          <div class="group" v-for="(group, id) in configData.group_configurations" :key="id">
+            <input class="name" v-model="group.group_name" />
+            <input class="name" v-model="group.pattern" />
+            <button v-on:click="deleteGroup(id)">Delete</button>
+          </div>
+          <input v-model="newGroup" />
+          <button v-on:click="addNewGroup">Add New Group</button>
+        </b-tab>
 
-    <div class="rules config-group">
-      <TextEditor
-        :code="configData.rules"
-        :title="'Rules'"
-        v-on:change="(e) => onChange(e, 'rules')"
-      ></TextEditor>
-    </div>
+        <b-tab title="Rules">
+          <TextEditor
+            :code="configData.rules"
+            :title="''"
+            v-on:change="(e) => onChange(e, 'rules')"
+          ></TextEditor>
+        </b-tab>
 
-    <div class="generals config-group">
-      <TextEditor
-        :code="configData.generals"
-        :title="'Generals'"
-        v-on:change="(e) => onChange(e, 'generals')"
-      ></TextEditor>
-    </div>
+        <b-tab title="Generals">
+          <TextEditor
+            :code="configData.generals"
+            :title="''"
+            v-on:change="(e) => onChange(e, 'generals')"
+          ></TextEditor>
+        </b-tab>
 
-    <div class="url-rewrites config-group">
-      <TextEditor
-        :code="configData.url_rewrites"
-        :title="'URL Rewrites'"
-        v-on:change="(e) => onChange(e, 'url_rewrites')"
-      ></TextEditor>
-    </div>
-
-    <button v-on:click="onSave">Save</button>
+        <b-tab title="URL Rewrites">
+          <TextEditor
+            :code="configData.url_rewrites"
+            :title="''"
+            v-on:change="(e) => onChange(e, 'url_rewrites')"
+          ></TextEditor>
+        </b-tab>
+      </b-tabs>
+    </b-card>
   </div>
 </template>
 
@@ -67,7 +71,8 @@ export default {
   data: function() {
     return {
       newAirport: "",
-      newGroup: ""
+      newGroup: "",
+      tab: ""
     };
   },
   methods: {
@@ -104,14 +109,40 @@ export default {
 
 <style scoped>
 .config-edit {
-  padding: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  width: 100%;
+  height: 100vh;
 }
 
-.config-group {
-  padding: 10px;
+.head {
+  height: 50px;
+  border-color: #dddddd;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.head .title {
+  font-family: "Merriweather";
+  font-size: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tabs {
+  flex: 2;
+}
+
+.tab-pane {
+  padding: 0px;
 }
 
 .name {
