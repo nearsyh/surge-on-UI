@@ -8,7 +8,7 @@
 <script>
 import ConfigCreation from "./ConfigCreation.vue";
 import ConfigEdit from "./ConfigEdit.vue";
-import axios from 'axios';
+import axios from "axios";
 import {
   createOrGetConfiguration,
   getConfiguration,
@@ -30,7 +30,7 @@ export default {
         rules: "",
         url_rewrites: "",
         airports: [],
-        groups: []
+        group_configurations: []
       }
     };
   },
@@ -48,7 +48,10 @@ export default {
       });
     },
     onSave: async function() {
-      this.configData = await updateConfiguration(this.configId, this.configData);
+      this.configData = await updateConfiguration(
+        this.configId,
+        this.configData
+      );
     },
     async refresh(id) {
       await getConfiguration(id).then(
@@ -65,4 +68,7 @@ export default {
 </script>
 
 <style scoped>
+.config-management {
+  width: 100%;
+}
 </style>

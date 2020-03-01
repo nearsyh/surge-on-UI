@@ -5,6 +5,7 @@
       <div class="airport" v-for="(airport, id) in configData.airports" :key="id">
         <input v-model="airport.airport_name" />
         <input v-model="airport.url" />
+        <button v-on:click="deleteAirport(id)">Delete</button>
       </div>
       <input v-model="newAirport" />
       <button v-on:click="addNewAirport">Add New Airport</button>
@@ -15,6 +16,7 @@
       <div class="group" v-for="(group, id) in configData.group_configurations" :key="id">
         <input v-model="group.group_name" />
         <input v-model="group.pattern" />
+        <button v-on:click="deleteGroup(id)">Delete</button>
       </div>
       <input v-model="newGroup" />
       <button v-on:click="addNewGroup">Add New Group</button>
@@ -77,6 +79,10 @@ export default {
       };
       this.newAirport = "";
     },
+    deleteAirport: function(id) {
+      delete this.configData.airports[id];
+      this.$forceUpdate();
+    },
     addNewGroup: function() {
       this.configData.group_configurations[this.newGroup] = {
         group_id: this.newGroup,
@@ -85,9 +91,19 @@ export default {
       };
       this.newGroup = "";
     },
+    deleteGroup: function(id) {
+      delete this.configData.group_configurations[id];
+      this.$forceUpdate();
+    }
   }
 };
 </script>
 
 <style scoped>
+.config-edit {
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 </style>
