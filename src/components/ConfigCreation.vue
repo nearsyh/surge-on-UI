@@ -2,8 +2,12 @@
   <div class="config-creation">
     <div class="brand">Surge-On</div>
     <div class="input-container">
-      <input v-model="id" class="id-input" placeholder="Input Config Id" />
-      <button v-on:click="$emit('create-or-edit', id)" class="create">GO</button>
+      <b-input-group>
+        <b-form-input v-model="id" placeholder="Input Config ID"></b-form-input>
+        <b-input-group-append>
+          <b-button variant="info" v-on:click="$emit('create-or-edit', id)" :disabled="!id">GO</b-button>
+        </b-input-group-append>
+      </b-input-group>
     </div>
   </div>
 </template>
@@ -19,9 +23,9 @@ export default {
 </script>
 
 <style scoped>
-.input-container {
+.config-creation {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -34,8 +38,7 @@ export default {
 }
 
 input {
-  border-radius: 15px;
-  border-width: 3px;
+  border-width: 3px 0 3px 3px;
   border-style: solid;
   width: 20vw;
   height: 40px;
@@ -43,7 +46,7 @@ input {
   padding-top: 0px;
   padding-bottom: 0px;
   padding-left: 20px;
-  padding-right: 72px;
+  padding-right: 20px;
   border-color: cornflowerblue;
   font-family: "Merriweather";
   text-align: center;
@@ -66,6 +69,6 @@ input:focus {
   border-color: cornflowerblue;
   background-color: cornflowerblue;
   font-size: 20px;
-  font-family: "Merriweather"
+  font-family: "Merriweather";
 }
 </style>

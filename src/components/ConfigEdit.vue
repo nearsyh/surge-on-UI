@@ -1,28 +1,31 @@
 <template>
   <div class="config-edit">
-    <div class="airports">
+    <div class="airports config-group">
       <h2>Airport Configuration</h2>
       <div class="airport" v-for="(airport, id) in configData.airports" :key="id">
-        <input v-model="airport.airport_name" />
-        <input v-model="airport.url" />
-        <button v-on:click="deleteAirport(id)">Delete</button>
+        <b-input-group :prepend="airport.airport_name" class="mt-3">
+          <b-form-input v-model="airport.url"></b-form-input>
+          <b-input-group-append>
+            <b-button variant="outline-success" v-on:click="deleteAirport(id)">Delete</b-button>
+          </b-input-group-append>
+        </b-input-group>
       </div>
       <input v-model="newAirport" />
       <button v-on:click="addNewAirport">Add New Airport</button>
     </div>
 
-    <div class="groups">
+    <div class="groups config-group">
       <h2>Proxy Group Configuration</h2>
       <div class="group" v-for="(group, id) in configData.group_configurations" :key="id">
-        <input v-model="group.group_name" />
-        <input v-model="group.pattern" />
+        <input class="name" v-model="group.group_name" />
+        <input class="name" v-model="group.pattern" />
         <button v-on:click="deleteGroup(id)">Delete</button>
       </div>
       <input v-model="newGroup" />
       <button v-on:click="addNewGroup">Add New Group</button>
     </div>
 
-    <div class="rules">
+    <div class="rules config-group">
       <TextEditor
         :code="configData.rules"
         :title="'Rules'"
@@ -30,7 +33,7 @@
       ></TextEditor>
     </div>
 
-    <div class="generals">
+    <div class="generals config-group">
       <TextEditor
         :code="configData.generals"
         :title="'Generals'"
@@ -38,7 +41,7 @@
       ></TextEditor>
     </div>
 
-    <div class="url-rewrites">
+    <div class="url-rewrites config-group">
       <TextEditor
         :code="configData.url_rewrites"
         :title="'URL Rewrites'"
@@ -64,7 +67,7 @@ export default {
   data: function() {
     return {
       newAirport: "",
-      newGroup: "",
+      newGroup: ""
     };
   },
   methods: {
@@ -75,7 +78,7 @@ export default {
       this.configData.airports[this.newAirport] = {
         airport_id: this.newAirport,
         airport_name: this.newAirport,
-        url: "",
+        url: ""
       };
       this.newAirport = "";
     },
@@ -87,7 +90,7 @@ export default {
       this.configData.group_configurations[this.newGroup] = {
         group_id: this.newGroup,
         group_name: this.newGroup,
-        pattern: "",
+        pattern: ""
       };
       this.newGroup = "";
     },
@@ -105,5 +108,29 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.config-group {
+  padding: 10px;
+}
+
+.name {
+  width: 10vw;
+  max-width: 200px;
+  padding-right: 20px;
+}
+
+.content {
+  width: 30vw;
+  max-width: 600px;
+}
+</style>
+
+<style>
+.config-edit h2 {
+  text-align: left;
+  font-family: "Merriweather";
+  color: royalblue;
+  font-size: 30px;
 }
 </style>
