@@ -8,6 +8,7 @@
 <script>
 import ConfigCreation from "./ConfigCreation.vue";
 import ConfigEdit from "./ConfigEdit.vue";
+import axios from 'axios';
 import {
   createOrGetConfiguration,
   getConfiguration
@@ -33,6 +34,7 @@ export default {
     };
   },
   async beforeMount() {
+    axios.defaults.baseURL = "http://" + process.env.VUE_APP_SERVER_HOST;
     if (this.configId) {
       await this.refresh(this.configId);
     }
