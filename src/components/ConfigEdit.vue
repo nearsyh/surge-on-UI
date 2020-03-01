@@ -7,26 +7,71 @@
       </div>
       <b-tabs pills card vertical>
         <b-tab title="Airports">
-          <div class="airport" v-for="(airport, id) in configData.airports" :key="id">
-            <b-input-group :prepend="airport.airport_name" class="mt-3">
-              <b-form-input v-model="airport.url"></b-form-input>
-              <b-input-group-append>
-                <b-button variant="outline-success" v-on:click="deleteAirport(id)">Delete</b-button>
-              </b-input-group-append>
-            </b-input-group>
-          </div>
-          <input v-model="newAirport" />
-          <button v-on:click="addNewAirport">Add New Airport</button>
+          <b-table :items="airports" :fields="['airport_name', 'url', 'action']">
+            <template v-slot:cell(airport_name)="row">
+              <div class="airport-name" v-if='row.item.airport_name !== newAirport'>
+                {{row.item.airport_name}}
+              </div>
+              <input v-else v-model="newAirport" />
+            </template>
+            <template v-slot:cell(url)="row">
+              <div class="airport-url" v-if='row.item.airport_name !== newAirport'>
+                <a :href="row.item.url">{{row.item.url}}</a>
+              </div>
+              <input v-else v-model="newAirportUrl" />
+            </template>
+
+            <template v-slot:cell(action)="row">
+              <div class="airport-delete" v-if='row.item.airport_name !== newAirport'>
+                <b-icon
+                  icon="trash-fill"
+                  aria-hidden="true"
+                  v-on:click="deleteAirport(row.item.airport_id)"
+                ></b-icon>
+              </div>
+              <div class="airport-add" v-else>
+                <b-icon
+                  icon="plus"
+                  aria-hidden="true"
+                  v-on:click="addNewAirport()"
+                ></b-icon>
+              </div>
+            </template>
+          </b-table>
         </b-tab>
 
         <b-tab title="Proxy Groups">
-          <div class="group" v-for="(group, id) in configData.group_configurations" :key="id">
-            <input class="name" v-model="group.group_name" />
-            <input class="name" v-model="group.pattern" />
-            <button v-on:click="deleteGroup(id)">Delete</button>
-          </div>
-          <input v-model="newGroup" />
-          <button v-on:click="addNewGroup">Add New Group</button>
+          <b-table :items="groups" :fields="['group_name', 'pattern', 'action']">
+            <template v-slot:cell(group_name)="row">
+              <div class="group-name" v-if='row.item.group_name !== newGroup'>
+                {{row.item.group_name}}
+              </div>
+              <input v-else v-model="newGroup" />
+            </template>
+            <template v-slot:cell(pattern)="row">
+              <div class="group-pattern" v-if='row.item.group_name !== newGroup'>
+                {{row.item.pattern}}
+              </div>
+              <input v-else v-model="newGroupPattern" />
+            </template>
+
+            <template v-slot:cell(action)="row">
+              <div class="group-delete" v-if='row.item.group_name !== newGroup'>
+                <b-icon
+                  icon="trash-fill"
+                  aria-hidden="true"
+                  v-on:click="deleteGroup(row.item.group_id)"
+                ></b-icon>
+              </div>
+              <div class="group-add" v-else>
+                <b-icon
+                  icon="plus"
+                  aria-hidden="true"
+                  v-on:click="addNewGroup()"
+                ></b-icon>
+              </div>
+            </template>
+          </b-table>
         </b-tab>
 
         <b-tab title="Rules">
@@ -71,9 +116,30 @@ export default {
   data: function() {
     return {
       newAirport: "",
+      newAirportUrl: "",
       newGroup: "",
-      tab: ""
+      newGroupPattern: "",
     };
+  },
+  computed: {
+    airports: function() {
+      return Object.values(this.configData.airports).concat([
+        {
+          airport_id: this.newAirport,
+          airport_name: this.newAirport,
+          url: this.newAirportUrl,
+        }
+      ]);
+    },
+    groups: function() {
+      return Object.values(this.configData.group_configurations).concat([
+        {
+          group_id: this.newGroup,
+          group_name: this.newGroup,
+          pattern: this.newGroupPattern,
+        }
+      ]);
+    }
   },
   methods: {
     onChange: function(code, field) {
@@ -83,11 +149,13 @@ export default {
       this.configData.airports[this.newAirport] = {
         airport_id: this.newAirport,
         airport_name: this.newAirport,
-        url: ""
+        url: this.newAirportUrl
       };
       this.newAirport = "";
+      this.newAirportUrl = "";
     },
     deleteAirport: function(id) {
+      console.log(id);
       delete this.configData.airports[id];
       this.$forceUpdate();
     },
@@ -95,9 +163,10 @@ export default {
       this.configData.group_configurations[this.newGroup] = {
         group_id: this.newGroup,
         group_name: this.newGroup,
-        pattern: ""
+        pattern: this.newGroupPattern,
       };
       this.newGroup = "";
+      this.newGroupPattern = "";
     },
     deleteGroup: function(id) {
       delete this.configData.group_configurations[id];
@@ -135,6 +204,10 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.airport-url {
+  text-align: left;
 }
 
 .tabs {
