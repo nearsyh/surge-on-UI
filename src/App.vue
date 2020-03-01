@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <ConfigManagement />
+    <span>{{ id }}</span>
+    <ConfigManagement v-bind:config-id="id"/>
   </div>
 </template>
 
@@ -9,13 +10,13 @@ import ConfigManagement from "./components/ConfigManagement.vue";
 import axios from "axios";
 
 export default {
+  props: ['id'],
   name: "App",
   components: {
     ConfigManagement
   },
   mounted: function() {
     axios.defaults.baseURL = "http://" + process.env.VUE_APP_SERVER_HOST;
-    console.log(axios.defaults.baseURL);
   }
 };
 </script>

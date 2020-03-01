@@ -1,6 +1,6 @@
 <template>
   <div class="config-management">
-    <ConfigCreation v-if="configId === ''" v-on:create-or-edit="createOrEdit" />
+    <ConfigCreation v-if="!configId" v-on:create-or-edit="createOrEdit" />
     <ConfigEdit v-bind:config-data="configData" v-else  />
   </div>
 </template>
@@ -15,9 +15,9 @@ export default {
     ConfigCreation,
     ConfigEdit
   },
+  props: ['configId'],
   data: function() {
     return {
-      configId: "",
       configData: {
         id: "",
         name: "",
@@ -29,10 +29,16 @@ export default {
       }
     };
   },
+  beforeRouteUpdate (to, from, next) {
+    console.log(to);
+    next();
+  },
   methods: {
     createOrEdit: async function(id) {
       this.configData = await createOrGetConfiguration(id);
-      this.configId = id;
+      this.$router.push({
+        path: `/configs/${id}`
+      });
     }
   }
 };
