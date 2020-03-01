@@ -3,26 +3,30 @@
     <b-card no-body>
       <div class="head">
         <div class="title">{{ `Config: ${configData.name}` }}</div>
-        <button v-on:click="onSave">Save</button>
+        <b-button-group>
+          <b-button variant="outline-primary" v-on:click="onSave">Save</b-button>
+          <b-button variant="outline-danger" v-on:click="onCancel">Cancel</b-button>
+        </b-button-group>
       </div>
       <b-tabs pills card vertical>
         <b-tab title="Airports">
           <b-table :items="airports" :fields="['airport_name', 'url', 'action']">
             <template v-slot:cell(airport_name)="row">
-              <div class="airport-name" v-if='row.item.airport_name !== newAirport'>
-                {{row.item.airport_name}}
-              </div>
+              <div
+                class="airport-name"
+                v-if="row.item.airport_name !== newAirport"
+              >{{row.item.airport_name}}</div>
               <input v-else v-model="newAirport" />
             </template>
             <template v-slot:cell(url)="row">
-              <div class="airport-url" v-if='row.item.airport_name !== newAirport'>
+              <div class="airport-url" v-if="row.item.airport_name !== newAirport">
                 <a :href="row.item.url">{{row.item.url}}</a>
               </div>
               <input v-else v-model="newAirportUrl" />
             </template>
 
             <template v-slot:cell(action)="row">
-              <div class="airport-delete" v-if='row.item.airport_name !== newAirport'>
+              <div class="airport-delete" v-if="row.item.airport_name !== newAirport">
                 <b-icon
                   icon="trash-fill"
                   aria-hidden="true"
@@ -30,11 +34,7 @@
                 ></b-icon>
               </div>
               <div class="airport-add" v-else>
-                <b-icon
-                  icon="plus"
-                  aria-hidden="true"
-                  v-on:click="addNewAirport()"
-                ></b-icon>
+                <b-icon icon="plus" aria-hidden="true" v-on:click="addNewAirport()"></b-icon>
               </div>
             </template>
           </b-table>
@@ -43,20 +43,22 @@
         <b-tab title="Proxy Groups">
           <b-table :items="groups" :fields="['group_name', 'pattern', 'action']">
             <template v-slot:cell(group_name)="row">
-              <div class="group-name" v-if='row.item.group_name !== newGroup'>
-                {{row.item.group_name}}
-              </div>
+              <div
+                class="group-name"
+                v-if="row.item.group_name !== newGroup"
+              >{{row.item.group_name}}</div>
               <input v-else v-model="newGroup" />
             </template>
             <template v-slot:cell(pattern)="row">
-              <div class="group-pattern" v-if='row.item.group_name !== newGroup'>
-                {{row.item.pattern}}
-              </div>
+              <div
+                class="group-pattern"
+                v-if="row.item.group_name !== newGroup"
+              >{{row.item.pattern}}</div>
               <input v-else v-model="newGroupPattern" />
             </template>
 
             <template v-slot:cell(action)="row">
-              <div class="group-delete" v-if='row.item.group_name !== newGroup'>
+              <div class="group-delete" v-if="row.item.group_name !== newGroup">
                 <b-icon
                   icon="trash-fill"
                   aria-hidden="true"
@@ -64,11 +66,7 @@
                 ></b-icon>
               </div>
               <div class="group-add" v-else>
-                <b-icon
-                  icon="plus"
-                  aria-hidden="true"
-                  v-on:click="addNewGroup()"
-                ></b-icon>
+                <b-icon icon="plus" aria-hidden="true" v-on:click="addNewGroup()"></b-icon>
               </div>
             </template>
           </b-table>
@@ -111,14 +109,15 @@ export default {
   },
   props: {
     configData: Object,
-    onSave: Function
+    onSave: Function,
+    onCancel: Function
   },
   data: function() {
     return {
       newAirport: "",
       newAirportUrl: "",
       newGroup: "",
-      newGroupPattern: "",
+      newGroupPattern: ""
     };
   },
   computed: {
@@ -127,7 +126,7 @@ export default {
         {
           airport_id: this.newAirport,
           airport_name: this.newAirport,
-          url: this.newAirportUrl,
+          url: this.newAirportUrl
         }
       ]);
     },
@@ -136,7 +135,7 @@ export default {
         {
           group_id: this.newGroup,
           group_name: this.newGroup,
-          pattern: this.newGroupPattern,
+          pattern: this.newGroupPattern
         }
       ]);
     }
@@ -163,7 +162,7 @@ export default {
       this.configData.group_configurations[this.newGroup] = {
         group_id: this.newGroup,
         group_name: this.newGroup,
-        pattern: this.newGroupPattern,
+        pattern: this.newGroupPattern
       };
       this.newGroup = "";
       this.newGroupPattern = "";

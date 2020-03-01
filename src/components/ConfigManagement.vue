@@ -1,7 +1,7 @@
 <template>
   <div class="config-management">
     <ConfigCreation v-if="!configId" v-on:create-or-edit="createOrEdit" />
-    <ConfigEdit v-bind:config-data="configData" :on-save="onSave" v-else />
+    <ConfigEdit v-bind:config-data="configData" :on-save="onSave" :on-cancel="onCancel" v-else />
   </div>
 </template>
 
@@ -52,6 +52,11 @@ export default {
         this.configId,
         this.configData
       );
+    },
+    onCancel: async function() {
+      if (confirm("Are you sure you want to discard all changes?")) {
+        await this.refresh(this.configId);
+      }
     },
     async refresh(id) {
       await getConfiguration(id).then(
