@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <span>{{ id }}</span>
-    <ConfigManagement v-bind:config-id="id"/>
+    <ConfigManagement v-bind:config-id="id" />
   </div>
 </template>
 
@@ -10,7 +9,7 @@ import ConfigManagement from "./components/ConfigManagement.vue";
 import axios from "axios";
 
 export default {
-  props: ['id'],
+  props: ["id"],
   name: "App",
   components: {
     ConfigManagement
@@ -22,12 +21,21 @@ export default {
 </script>
 
 <style>
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 </style>

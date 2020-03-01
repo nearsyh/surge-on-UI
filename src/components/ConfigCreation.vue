@@ -1,7 +1,10 @@
 <template>
   <div class="config-creation">
-    <input v-model="id" />
-    <button v-on:click="$emit('create-or-edit', id)">Create</button>
+    <div class="brand">Surge-On</div>
+    <div class="input-container">
+      <input v-model="id" class="id-input" placeholder="Input Config Id" />
+      <button v-on:click="$emit('create-or-edit', id)" class="create">GO</button>
+    </div>
   </div>
 </template>
 
@@ -9,11 +12,60 @@
 export default {
   data: function() {
     return {
-      id: ''
+      id: ""
     };
   }
 };
 </script>
 
 <style scoped>
+.input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.brand {
+  padding-bottom: 100px;
+  font-weight: bold;
+  font-size: 100px;
+  font-family: "Merriweather";
+}
+
+input {
+  border-radius: 15px;
+  border-width: 3px;
+  border-style: solid;
+  width: 20vw;
+  height: 40px;
+  font-size: 20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 20px;
+  padding-right: 72px;
+  border-color: cornflowerblue;
+  font-family: "Merriweather";
+  text-align: center;
+}
+
+input:focus {
+  border-color: darkcyan;
+  outline: none;
+}
+
+.create {
+  border-radius: 0 11px 11px 0;
+  border-width: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-left: -73px;
+  height: 40px;
+  border-color: cornflowerblue;
+  background-color: cornflowerblue;
+  font-size: 20px;
+  font-family: "Merriweather"
+}
 </style>
