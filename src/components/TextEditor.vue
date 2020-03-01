@@ -1,7 +1,7 @@
 <template>
   <div class="text-editor">
     <h2 v-if="title">{{ title }}</h2>
-    <prism-editor :code="code" :lineNumbers="true" :emitEvents="true" v-on:change="(event) => $emit('change', event)" />
+    <prism-editor :code="code" :lineNumbers="false" :emitEvents="true" v-on:change="(event) => $emit('change', event)" />
   </div>
 </template>
 
