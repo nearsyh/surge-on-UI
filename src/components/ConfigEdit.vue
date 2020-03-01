@@ -1,6 +1,10 @@
 <template>
   <div class="config-edit">
-    <b-card no-body>
+    <div class="loading" v-if="loading">
+      <b-spinner class="align-middle"></b-spinner>
+      <strong>Loading...</strong>
+    </div>
+    <b-card no-body v-else>
       <div class="head">
         <div class="title">{{ `Config: ${configData.name}` }}</div>
         <b-button-group>
@@ -121,6 +125,9 @@ export default {
     };
   },
   computed: {
+    loading: function() {
+      return !this.configData.name;
+    },
     airports: function() {
       return Object.values(this.configData.airports).concat([
         {
@@ -154,7 +161,6 @@ export default {
       this.newAirportUrl = "";
     },
     deleteAirport: function(id) {
-      console.log(id);
       delete this.configData.airports[id];
       this.$forceUpdate();
     },
@@ -179,6 +185,14 @@ export default {
 .config-edit {
   width: 100%;
   height: 100vh;
+}
+
+.loading {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .head {
