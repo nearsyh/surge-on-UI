@@ -1,24 +1,13 @@
-# surge-config-ui
+# Surge-On
 
-## Project setup
-```
-npm install
-```
+This project is a GUI for [Surge Config Server](https://github.com/nearsyh/surge-config-server). It provides a simple way to modify your surge configuration.
 
-### Compiles and hot-reloads for development
-```
+## How to run locally
+
+You can run this locally using
+
+```bash
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+**Note** you need to add `VUE_APP_SERVER_HOST={your server address}` to your `.env` file. Otherwise, it uses `localhost:8080` as the server address.
