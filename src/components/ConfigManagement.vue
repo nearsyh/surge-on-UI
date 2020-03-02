@@ -30,7 +30,8 @@ export default {
         rules: "",
         url_rewrites: "",
         airports: [],
-        group_configurations: []
+        group_configurations: [],
+        proxies: [],
       }
     };
   },

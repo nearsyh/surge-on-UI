@@ -56,6 +56,14 @@
           </b-table>
         </b-tab>
 
+        <b-tab title="Proxies">
+          <TextEditor
+            :code="configData.proxies"
+            :title="''"
+            v-on:change="(e) => onChange(e, 'proxies')"
+          ></TextEditor>
+        </b-tab>
+
         <b-tab title="Proxy Groups">
           <b-table :items="groups" :fields="['group_name', 'pattern', 'action']">
             <template v-slot:cell(group_name)="row">
