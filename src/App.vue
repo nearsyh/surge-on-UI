@@ -15,7 +15,7 @@ export default {
     ConfigManagement
   },
   mounted: function() {
-    axios.defaults.baseURL = "http://" + process.env.VUE_APP_SERVER_HOST;
+    axios.defaults.baseURL = process.env.VUE_APP_SERVER_HOST;
   }
 };
 </script>

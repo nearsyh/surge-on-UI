@@ -176,7 +176,7 @@ export default {
     onCopy: function() {
       navigator.clipboard
         .writeText(
-          `http://surge.nearsyh.me/api/v1/configurations/${this.configData.name}/surge`
+          `${process.env.VUE_APP_SERVER_HOST}/api/v1/configurations/${this.configData.name}/surge`
         )
         .then(() => this.showAlert());
     },
