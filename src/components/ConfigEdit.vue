@@ -156,7 +156,7 @@ export default {
     },
     onCopy: async function() {
       await navigator.clipboard.writeText(
-        `http://surge.nearsyh.me/api/v1/configurations/${configData.name}/surge`
+        `http://surge.nearsyh.me/api/v1/configurations/${this.configData.name}/surge`
       );
       alert("Surge Link is copied to your clipboard");
     },
