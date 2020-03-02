@@ -6,10 +6,19 @@
     </div>
     <b-card no-body v-else>
       <div class="head">
-        <div>
+        <div class="left-head">
           <div class="title">{{ `Config: ${configData.name}` }}</div>
-          <b-button variant="outline-primary" v-on:click="onCopy">Get Surge Link</b-button>
+          <b-button variant="outline-primary" v-on:click="onCopy">Copy Surge Link</b-button>
         </div>
+        <b-alert
+          :show="dismissCountDown"
+          :dismissible="false"
+          variant="success"
+          @dismissed="dismissCountDown=0"
+          @dismiss-count-down="countDownChanged"
+        >
+          <p>Link is copied to your clipboard.</p>
+        </b-alert>
         <b-button-group>
           <b-button variant="outline-primary" v-on:click="onSave">Save</b-button>
           <b-button variant="outline-danger" v-on:click="onCancel">Cancel</b-button>
@@ -124,7 +133,9 @@ export default {
       newAirport: "",
       newAirportUrl: "",
       newGroup: "",
-      newGroupPattern: ""
+      newGroupPattern: "",
+      dismissCountDown: 0,
+      showDismissibleAlert: false
     };
   },
   computed: {
@@ -154,11 +165,12 @@ export default {
     onChange: function(code, field) {
       this.configData[field] = code;
     },
-    onCopy: async function() {
-      await navigator.clipboard.writeText(
-        `http://surge.nearsyh.me/api/v1/configurations/${this.configData.name}/surge`
-      );
-      alert("Surge Link is copied to your clipboard");
+    onCopy: function() {
+      navigator.clipboard
+        .writeText(
+          `http://surge.nearsyh.me/api/v1/configurations/${this.configData.name}/surge`
+        )
+        .then(() => this.showAlert());
     },
     addNewAirport: function() {
       this.configData.airports[this.newAirport] = {
@@ -185,6 +197,12 @@ export default {
     deleteGroup: function(id) {
       delete this.configData.group_configurations[id];
       this.$forceUpdate();
+    },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
+    },
+    showAlert() {
+      this.dismissCountDown = 1;
     }
   }
 };
@@ -217,6 +235,14 @@ export default {
   align-items: center;
 }
 
+.head .left-head {
+  width: 25%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .head .title {
   font-family: "Merriweather";
   font-size: 20px;
@@ -238,6 +264,16 @@ export default {
 
 .tab-pane {
   padding: 0px;
+}
+
+.alert {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.alert p {
+  margin-bottom: 0px;
 }
 
 .name {
