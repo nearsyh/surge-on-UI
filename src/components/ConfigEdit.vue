@@ -6,7 +6,10 @@
     </div>
     <b-card no-body v-else>
       <div class="head">
-        <div class="title">{{ `Config: ${configData.name}` }}</div>
+        <div>
+          <div class="title">{{ `Config: ${configData.name}` }}</div>
+          <b-button variant="outline-primary" v-on:click="onCopy">Get Surge Link</b-button>
+        </div>
         <b-button-group>
           <b-button variant="outline-primary" v-on:click="onSave">Save</b-button>
           <b-button variant="outline-danger" v-on:click="onCancel">Cancel</b-button>
@@ -150,6 +153,12 @@ export default {
   methods: {
     onChange: function(code, field) {
       this.configData[field] = code;
+    },
+    onCopy: async function() {
+      await navigator.clipboard.writeText(
+        `http://surge.nearsyh.me/api/v1/configurations/${configData.name}/surge`
+      );
+      alert("Surge Link is copied to your clipboard");
     },
     addNewAirport: function() {
       this.configData.airports[this.newAirport] = {
