@@ -58,7 +58,7 @@
 
         <b-tab title="Proxies">
           <TextEditor
-            :code="configData.proxies"
+            :code="proxies"
             :title="''"
             v-on:change="(e) => onChange(e, 'proxies')"
           ></TextEditor>
@@ -159,6 +159,10 @@ export default {
         }
       ]);
     },
+    proxies: function() {
+      // TODO: Refine Proxies Editing
+      return this.configData.proxies.join("\n");
+    },
     groups: function() {
       return Object.values(this.configData.group_configurations).concat([
         {
@@ -171,7 +175,12 @@ export default {
   },
   methods: {
     onChange: function(code, field) {
-      this.configData[field] = code;
+      if (field === "proxies") {
+        // TODO: Refine Proxies Editing
+        this.configData.proxies = code.split("\n");
+      } else {
+        this.configData[field] = code;
+      }
     },
     onCopy: function() {
       navigator.clipboard
